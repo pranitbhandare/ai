@@ -1,0 +1,300 @@
+TSP:
+import sys
+
+def all_visited(visited):
+    return all(visited)
+
+def tsp(visited, cost, current, path, n):
+    global min_cost, ans
+    if(all_visited(visited)):
+        if (cost+graph[current][0]<min_cost):
+            min_cost=cost+graph[current][0]
+            ans=path+[0]
+        return
+    for i in range(n):
+        if not visited[i] and i!=current:
+            visited[i]=True
+            tsp(visited,cost+graph[current][i],i,path+[i], n)
+            visited[i]=False
+
+if __name__=="__main__":
+    print("Enter Total No of Vertices:")
+    n=int(input())
+    graph=[]
+
+    for i in range (n):
+        row=[]
+        for j in range(n):
+            if(i!=j):
+                print(f"Enter the Distance of {i} to {j}")
+                dist=int(input())
+                row.append(dist)
+            else:
+                row.append(0)
+        graph.append(row)
+
+
+    for i in range(n):
+        for j in range(n):
+            print(graph[i][j], end="\t")
+        print()
+    
+    path = []  # For storing the shortest path
+    visited = [False] * n  # Initializing visited array with all False values
+    min_cost = sys.maxsize
+    visited[0] = True  # Marking the first node as visited
+
+    tsp(visited, 0, 0, [0], n)
+    print("Shortest Path:", ans)
+    print("Cost:", min_cost)
+ 
+output:
+Enter Total No of Vertices:
+4
+Enter the Distance of 0 to 1
+10
+Enter the Distance of 0 to 2
+15
+Enter the Distance of 0 to 3
+20
+Enter the Distance of 1 to 0
+10
+Enter the Distance of 1 to 2
+35
+Enter the Distance of 1 to 3
+25
+Enter the Distance of 2 to 0
+15
+Enter the Distance of 2 to 1
+35
+Enter the Distance of 2 to 3
+30
+Enter the Distance of 3 to 0
+20
+Enter the Distance of 3 to 1
+25
+Enter the Distance of 3 to 2
+30
+0       10      15      20
+10      0       35      25
+15      35      0       30
+20      25      30      0
+Shortest Path: [0, 1, 3, 2, 0]
+Cost: 80
+
+
+
+***************************************************************
+TOWER OF HANOI:
+def tower_of_hanoi(n,A,B,C):
+    if(n==1):
+        print(f"Move Disk {n} from {A} to {C}")
+        return
+    tower_of_hanoi(n-1,A,C,B)
+    print(f"Move Disk {n} from {A} to {C}")
+    tower_of_hanoi(n-1,B,A,C)
+
+if __name__=="__main__":
+    print("Enter the Total No. of Disks:")
+    n=int(input())
+    A=1 # source disk
+    B=2 # Auxillary disk
+    C=3 # destination disk
+    tower_of_hanoi(n,A,B,C)
+output: 
+Enter the Total No. of Disks:
+3
+Move Disk 1 from 1 to 3
+Move Disk 2 from 1 to 2
+Move Disk 1 from 3 to 2
+Move Disk 3 from 1 to 3
+Move Disk 1 from 2 to 1
+Move Disk 2 from 2 to 3
+Move Disk 1 from 1 to 3
+*********************************************************************
+
+
+SORTING:
+def bubble_sort(arr):
+    """
+    Bubble Sort: Compare adjacent elements and swap them if they are in the wrong order.
+    """
+    n = len(arr)
+    for i in range(n):
+        for j in range(0, n-i-1):
+            if arr[j] > arr[j+1]:   
+                arr[j], arr[j+1] = arr[j+1], arr[j]
+
+def selection_sort(arr):
+    """
+    Selection Sort: Find the minimum element from the unsorted portion and swap it with the first element.
+    """
+    n = len(arr)
+    for i in range(n):
+        min_idx = i
+        for j in range(i+1, n):
+            if arr[j] < arr[min_idx]:
+                min_idx = j
+        arr[i], arr[min_idx] = arr[min_idx], arr[i]
+
+def insertion_sort(arr):
+    """
+    Insertion Sort: Build the sorted array one element at a time by repeatedly inserting the next element
+    into the sorted portion of the array.
+    """
+    n = len(arr)
+    for i in range(1, n):
+        key = arr[i]
+        j = i - 1
+        while j >= 0 and key < arr[j]:
+            arr[j + 1] = arr[j]
+            j -= 1
+        arr[j + 1] = key
+
+def sort_switch(choice, arr):
+    """
+    Switch case to choose the sorting algorithm based on user input.
+    """
+    if choice == 1:
+        bubble_sort(arr)
+    elif choice == 2:
+        selection_sort(arr)
+    elif choice == 3:
+        insertion_sort(arr)
+    else:
+        print("Invalid choice. Please choose between 1, 2, or 3.")
+
+# Test the sorting algorithms
+arr = [64, 34, 25, 12, 22, 11, 90]
+print("Original Array:", arr)
+
+# Prompt the user to choose a sorting algorithm
+print("Choose a sorting algorithm:")
+print("1. Bubble Sort")
+print("2. Selection Sort")
+print("3. Insertion Sort")
+
+choice = int(input("Enter your choice (1, 2, or 3): "))
+
+sort_switch(choice, arr)
+print("Sorted Array:", arr)
+
+output:
+Original Array: [64, 34, 25, 12, 22, 11, 90]
+Choose a sorting algorithm:
+1. Bubble Sort
+2. Selection Sort
+3. Insertion Sort
+Enter your choice (1, 2, or 3): 1
+Sorted Array: [11, 12, 22, 25, 34, 64, 90]
+
+Original Array: [64, 34, 25, 12, 22, 11, 90]
+Choose a sorting algorithm:
+1. Bubble Sort
+2. Selection Sort
+3. Insertion Sort
+Enter your choice (1, 2, or 3): 2
+Sorted Array: [11, 12, 22, 25, 34, 64, 90]
+
+Original Array: [64, 34, 25, 12, 22, 11, 90]
+Choose a sorting algorithm:
+1. Bubble Sort
+2. Selection Sort
+3. Insertion Sort
+Enter your choice (1, 2, or 3): 2
+Sorted Array: [11, 12, 22, 25, 34, 64, 90]
+
+
+********************************************************************************************************************
+
+
+TIC TAC TOE
+
+def PrintBoard(xState,oState):
+    zero="X" if xState[0] else ("O" if oState[0] else 0)
+    one="X" if xState[1] else ("O" if oState[1] else 1)
+    two="X" if xState[2] else ("2" if oState[0] else 2)
+    three="X" if xState[3] else ("3" if oState[0] else 3)
+    four="X" if xState[4] else ("4" if oState[0] else 4)
+    five="X" if xState[5] else ("5" if oState[0] else 5)
+    six="X" if xState[6] else ("6" if oState[0] else 6)
+    seven="X" if xState[7] else ("7" if oState[0] else 7)
+    eight="X" if xState[8] else ("8" if oState[0] else 8)
+    print(f" {zero} | {one} | {two} ")
+    print(f"---|---|---")
+    print(f" {three} | {four} | {five} ")
+    print(f"---|---|---")
+    print(f" {six} | {seven} | {eight} ")
+
+def sum(a,b,c):
+    return a+b+c
+def CheckWin(xState,oState):
+    wins=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]]
+    for win in wins:
+        if(sum(xState[win[0]],xState[win[1]],xState[win[2]])==3):
+            print("Hurray!!,X Won the Match!!")
+            return 1
+        if(sum(oState[win[0]],oState[win[1]],oState[win[2]])==3):
+            print("Hurray!!,O Won the Match!!")
+            return 0
+    return -1
+print("Welcome to Tic Tac Toe Game!!")
+xState=[0,0,0,0,0,0,0,0,0]
+oState=[0,0,0,0,0,0,0,0,0]
+turn=1#turn of X
+while(True):
+    PrintBoard(xState,oState)
+    if(turn==1):
+        print("Chance Of X:")
+        value=int(input("Please Enter the Number:"))
+        xState[value]=1
+    else:
+        print("Chance Of O:")
+        value = int(input("Please Enter the Number:"))
+        oState[value] = 1
+    cwin=CheckWin(xState,oState)
+    if(cwin!=-1):
+        print("Match Over!!")
+        break
+    turn=1-turn
+
+output:
+Welcome to Tic Tac Toe Game!!
+ 0 | 1 | 2 
+---|---|---
+ 3 | 4 | 5 
+---|---|---
+ 6 | 7 | 8 
+Chance Of X:
+Please Enter the Number:0
+ X | 1 | 2 
+---|---|---
+ 3 | 4 | 5 
+---|---|---
+ 6 | 7 | 8 
+Chance Of O:
+Please Enter the Number:2
+ X | 1 | 2 
+---|---|---
+ 3 | 4 | 5 
+---|---|---
+ 6 | 7 | 8 
+Chance Of X:
+Please Enter the Number:4
+ X | 1 | 2 
+---|---|---
+ 3 | X | 5 
+---|---|---
+ 6 | 7 | 8 
+Chance Of O:
+Please Enter the Number:6
+ X | 1 | 2 
+---|---|---
+ 3 | X | 5 
+---|---|---
+ 6 | 7 | 8 
+Chance Of X:
+Please Enter the Number:8
+Hurray!!,X Won the Match!!
+Match Over!!
+
